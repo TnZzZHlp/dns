@@ -5,11 +5,9 @@ version = "0.1.0"
 
 [dependencies]
 async-trait = "0.1.89"
-hickory-client = "0.25.2"
-hickory-dns = "0.25.2"
-hickory-proto = "0.25.2"
-md5 = "0.8.0"
-serde = { version = "1.0.219", features = ["derive"] }
+domain = "0.11.0"
+moka = {version = "0.12.10", features = ["future"]}
+serde = {version = "1.0.219", features = ["derive"]}
 serde_json = "1.0.143"
 tokio = {version = "1.47.1", features = ["full"]}
 tracing = "0.1.41"
