@@ -63,7 +63,7 @@ impl DnsCache {
 
         let key = self.generate_cache_key(query);
         let cache = self.cache.read().await;
-        
+
         if let Some(entry) = cache.get(&key) {
             if !entry.is_expired() {
                 debug!("缓存命中: {}", key);
@@ -89,7 +89,7 @@ impl DnsCache {
         // 如果缓存已满，清理过期条目或删除最旧的条目
         if cache.len() >= self.max_size {
             self.cleanup_cache(&mut cache).await;
-            
+
             // 如果清理后仍然满了，删除一个条目
             if cache.len() >= self.max_size {
                 if let Some(oldest_key) = cache.keys().next().cloned() {
@@ -109,14 +109,14 @@ impl DnsCache {
 
         let entry = CacheEntry::new(response, ttl);
         cache.insert(key.clone(), entry);
-        
+
         debug!("缓存存储: {}, TTL: {:?}", key, ttl);
     }
 
     /// 清理过期的缓存条目
     async fn cleanup_cache(&self, cache: &mut HashMap<String, CacheEntry>) {
         let mut expired_keys = Vec::new();
-        
+
         for (key, entry) in cache.iter() {
             if entry.is_expired() {
                 expired_keys.push(key.clone());
@@ -139,7 +139,7 @@ impl DnsCache {
         let initial_size = cache.len();
         self.cleanup_cache(&mut cache).await;
         let final_size = cache.len();
-        
+
         if initial_size != final_size {
             info!("缓存清理完成: {} -> {} 条目", initial_size, final_size);
         }
@@ -161,7 +161,7 @@ impl DnsCache {
         let cache = self.cache.read().await;
         let total_entries = cache.len();
         let expired_entries = cache.values().filter(|entry| entry.is_expired()).count();
-        
+
         CacheStats {
             total_entries,
             expired_entries,

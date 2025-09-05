@@ -1,6 +1,6 @@
 pub mod logging;
-pub mod rate_limit;
 pub mod metrics;
+pub mod rate_limit;
 
 use async_trait::async_trait;
 use std::net::SocketAddr;
@@ -95,7 +95,10 @@ impl MiddlewarePipeline {
         client_addr: SocketAddr,
     ) -> Result<(), MiddlewareError> {
         for middleware in &self.middlewares {
-            if let Err(e) = middleware.handle_response(request, response, client_addr).await {
+            if let Err(e) = middleware
+                .handle_response(request, response, client_addr)
+                .await
+            {
                 error!("中间件 {} 处理响应失败: {}", middleware.name(), e);
                 return Err(e);
             }

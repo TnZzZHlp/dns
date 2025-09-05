@@ -1,6 +1,5 @@
 mod cache;
 mod config;
-mod filter;
 mod middleware;
 mod resolver;
 mod server;

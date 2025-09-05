@@ -1,7 +1,7 @@
-use super::{Middleware, MiddlewareError, MiddlewareResult, DnsMessage};
+use super::{DnsMessage, Middleware, MiddlewareError, MiddlewareResult};
 use async_trait::async_trait;
 use std::net::SocketAddr;
-use tracing::{info, debug};
+use tracing::{debug, info};
 
 /// 日志中间件 - 记录所有DNS请求和响应
 pub struct LoggingMiddleware {
@@ -22,7 +22,7 @@ impl Middleware for LoggingMiddleware {
         client_addr: SocketAddr,
     ) -> MiddlewareResult {
         if self.enabled {
-            info!("DNS请求来自: {}, 大小: {} bytes", client_addr, request.len());
+            info!("DNS请求来自: {}", client_addr);
             debug!("请求内容: {:?}", request);
         }
         Ok(None) // 继续处理，不直接返回响应
@@ -35,7 +35,7 @@ impl Middleware for LoggingMiddleware {
         client_addr: SocketAddr,
     ) -> Result<(), MiddlewareError> {
         if self.enabled {
-            info!("DNS响应发送给: {}, 大小: {} bytes", client_addr, response.len());
+            info!("DNS响应发送给: {}", client_addr);
             debug!("响应内容: {:?}", response);
         }
         Ok(())

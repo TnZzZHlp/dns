@@ -5,6 +5,7 @@ version = "0.1.0"
 
 [dependencies]
 async-trait = "0.1.89"
+hickory-client = "0.25.2"
 hickory-dns = "0.25.2"
 hickory-proto = "0.25.2"
 md5 = "0.8.0"

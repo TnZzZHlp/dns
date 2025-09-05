@@ -230,6 +230,7 @@ name = "dns"
 version = "0.1.0"
 dependencies = [
  "async-trait",
+ "hickory-client",
  "hickory-dns",
  "hickory-proto",
  "md5",
