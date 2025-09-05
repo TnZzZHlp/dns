@@ -1,0 +1,59 @@
+{
+    "server": {
+        "listen_addr": "127.0.0.1:8853",
+        "tcp_enabled": true,
+        "udp_enabled": true,
+        "timeout": 5
+    },
+    "upstreams": [
+        {
+            "name": "Cloudflare Primary",
+            "addr": "1.1.1.1:53",
+            "protocol": "UDP",
+            "priority": 1,
+            "timeout": 5
+        },
+        {
+            "name": "Cloudflare Secondary",
+            "addr": "1.0.0.1:53",
+            "protocol": "UDP",
+            "priority": 2,
+            "timeout": 5
+        },
+        {
+            "name": "Google Primary",
+            "addr": "8.8.8.8:53",
+            "protocol": "UDP",
+            "priority": 3,
+            "timeout": 5
+        },
+        {
+            "name": "Google Secondary",
+            "addr": "8.8.4.4:53",
+            "protocol": "UDP",
+            "priority": 4,
+            "timeout": 5
+        }
+    ],
+    "cache": {
+        "enabled": true,
+        "max_size": 10000,
+        "ttl_min": 60,
+        "ttl_max": 3600
+    },
+    "filters": {
+        "blocklist_enabled": false,
+        "blocklist_files": ["config/blocklist.txt"],
+        "allowlist_enabled": false,
+        "allowlist_domains": ["example.com", "google.com"]
+    },
+    "middleware": {
+        "logging_enabled": true,
+        "metrics_enabled": true,
+        "rate_limiting": {
+            "enabled": true,
+            "requests_per_second": 100,
+            "burst_size": 200
+        }
+    }
+}
